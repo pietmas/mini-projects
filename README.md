@@ -1,6 +1,6 @@
-# Learning Journey Repository
+# Mini-Projects Repository
 
-In this repository, I am putting everything I am trying to learn, with small projects that help me exercise the usage of certain libraries and techniques. Currently, this repository includes a whiteboard project using OpenCV.
+In this repository, I am putting everything I learned or everything I want to focus on, with small projects that help me exercise the usage of certain libraries and techniques. 
 
 ## Project List
 
