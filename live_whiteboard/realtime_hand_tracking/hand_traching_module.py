@@ -27,8 +27,9 @@ class HandDetector:
         self.mpDraw = mp.solutions.drawing_utils
         self.results = None
         self.lmList = []
+        self.draw = True
 
-    def find_hands(self, img, draw=True):
+    def find_hands(self, img):
         """
         Detect hands in an image and draw landmarks if draw is True.
         """
@@ -38,13 +39,13 @@ class HandDetector:
         # Draw hand landmarks
         if self.results.multi_hand_landmarks:
             for handLms in self.results.multi_hand_landmarks:
-                if draw:
+                if self.draw:
                     self.mpDraw.draw_landmarks(
                         img, handLms, self.mpHands.HAND_CONNECTIONS
                     )
         return img
 
-    def find_position(self, img, handNo=0, draw=True):
+    def find_position(self, img, handNo=0):
         """
         Find the positions of hand landmarks in the image.
         """
@@ -59,7 +60,7 @@ class HandDetector:
                 self.lmList.append([id, cx, cy])
 
                 # Draw circles on landmarks
-                if draw:
+                if self.draw:
                     cv.circle(img, (cx, cy), 5, (255, 0, 255), cv.FILLED)
         return self.lmList
 
@@ -89,7 +90,7 @@ class HandDetector:
 
         return fingers
 
-    def find_distance(self, p1, p2, img=None, draw=True, r=15, t=3):
+    def find_distance(self, p1, p2, img=None, r=15, t=3):
         """
         Find the distance between two landmarks.
         """
@@ -99,10 +100,42 @@ class HandDetector:
 
         length = np.linalg.norm(np.array([x1, y1]) - np.array([x2, y2]))
 
-        if draw and img is not None:
+        if self.draw and img is not None:
             cv.line(img, (x1, y1), (x2, y2), (255, 0, 255), t)
             cv.circle(img, (x1, y1), r, (255, 0, 255), cv.FILLED)
             cv.circle(img, (x2, y2), r, (255, 0, 255), cv.FILLED)
             cv.circle(img, (cx, cy), r, (0, 0, 255), cv.FILLED)
 
         return length, img, [x1, y1, x2, y2, cx, cy]
+    
+    def is_thumb_index_touching(self, img=None, threshold=30):
+        """
+        Determine if the thumb and index finger are touching.
+
+        Parameters:
+            img (numpy.ndarray): The image on which to draw.
+            draw (bool): Whether to draw indicators on the image.
+            threshold (float): The distance threshold to consider fingers as touching.
+
+        Returns:
+            bool: True if touching, False otherwise.
+        """
+        if not self.lmList:
+            return False
+
+        # Get positions of thumb tip and index finger tip
+        x1, y1 = self.lmList[4][1], self.lmList[4][2]   # Thumb tip
+        x2, y2 = self.lmList[8][1], self.lmList[8][2]   # Index finger tip
+
+        # Calculate the distance between thumb tip and index finger tip
+        distance = np.hypot(x2 - x1, y2 - y1)
+        touching = distance < threshold
+
+        if self.draw and img is not None:
+            # Choose color based on whether the fingers are touching
+            color = (0, 255, 0) if touching else (0, 0, 255)
+            cv.circle(img, (x1, y1), 15, color, cv.FILLED)
+            cv.circle(img, (x2, y2), 15, color, cv.FILLED)
+            cv.line(img, (x1, y1), (x2, y2), color, 3)
+
+        return touching
