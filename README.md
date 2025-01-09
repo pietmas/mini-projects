@@ -5,6 +5,10 @@ In this repository, I am putting everything I learned or everything I want to fo
 ## Project List
 
 - **Whiteboard Project**: A digital whiteboard created with OpenCV, allowing for basic drawing and interaction features. This project is based on the tutorial by Murtaza's Workshop, which can be found [here](https://www.youtube.com/watch?v=ZiwZaAVbXQo).
+- **RAG Chatbot**: this project is a simple Retrieval-Augmented Generation (RAG) chatbot built with: 
+    - **LangChain** for orchestrating document retrieval and LLM calls
+    - **FAISS** for efficient similarity search
+    - **Hugging Face Transformers** for the language model
 
 ## Goals
 
