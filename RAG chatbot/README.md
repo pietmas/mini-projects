@@ -27,7 +27,7 @@ RAG allows the chatbot to:
   - Chunk the documents (e.g., into 1,000-character sections) for better retrieval.
 
 - **Vector Store with FAISS**  
-  - Embed document chunks using a pretrained embedding model (e.g., `sentence-transformers/all-MiniLM-L6-v2`).  
+  - Embed document chunks using a pretrained embedding model (`sentence-transformers/all-MiniLM-L6-v2`).  
   - Store embeddings in a FAISS index for fast approximate nearest neighbor (ANN) searches.
 
 - **Open-Source LLM Integration**  
