@@ -36,7 +36,6 @@ class Gesture(Enum):
     ADJUST_BRUSH_SIZE = 6
     NONE = 7
 
-# ------------------------------
 # Utility Functions
 # ------------------------------
 
@@ -62,7 +61,6 @@ def merge_images(img1, img2):
     result = cv.bitwise_or(img1, drawing)
     return result
 
-# ------------------------------
 # Main Application Class
 # ------------------------------
 
@@ -277,7 +275,6 @@ class VirtualPainter:
         """Reset the pen position."""
         self.xp, self.yp = 0, 0
 
-# ------------------------------
 # Run the Application
 # ------------------------------
 
