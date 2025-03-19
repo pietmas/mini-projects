@@ -7,7 +7,6 @@ import logging
 import datetime
 from realtime_hand_tracking.hand_traching_module import HandDetector
 
-# ------------------------------
 # Configuration and Constants
 # ------------------------------
 
